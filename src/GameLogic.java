@@ -100,7 +100,7 @@ public class GameLogic {
         if (field.position[3] == 'O' && field.position[5] == 'O' && field.position[7] == 'O') Winner = 'O';
         if (Winner == 'O' )
         {
-            System.out.println( "Player2 wins the game." );
+            System.out.println( "Computer wins the game." );
             return Winner; }
 
         return Winner;
