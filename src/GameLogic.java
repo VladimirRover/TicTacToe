@@ -16,7 +16,9 @@ public class GameLogic {
     void play()
     {
 
-        while (maxSteps > 0){
+        char blank = ' ';
+        do {
+
             stepOrder();
             field.currentBoard();
             if (!isPlayerStep){
@@ -31,7 +33,7 @@ public class GameLogic {
             if (maxSteps == 0){
                 System.out.println("Game over");
             }
-        }
+        }while (checkWinner() == blank);
     }
 
     private void stepOrder() {
@@ -51,7 +53,6 @@ public class GameLogic {
                 field.position[computerCell] = 'O';
                 isPlayerStep = true;
             }
-
         }
     }
 
@@ -67,6 +68,42 @@ public class GameLogic {
         else {
             return false;
         }
+    }
+
+
+    public  char checkWinner()
+    {
+        char Winner = ' ';
+
+        // Check if X wins
+        if (field.position[1] == 'X' && field.position[2] == 'X' && field.position[3] == 'X') Winner = 'X';
+        if (field.position[4] == 'X' && field.position[5] == 'X' && field.position[6] == 'X') Winner = 'X';
+        if (field.position[7] == 'X' && field.position[8] == 'X' && field.position[9] == 'X') Winner = 'X';
+        if (field.position[1] == 'X' && field.position[4] == 'X' && field.position[7] == 'X') Winner = 'X';
+        if (field.position[2] == 'X' && field.position[5] == 'X' && field.position[8] == 'X') Winner = 'X';
+        if (field.position[3] == 'X' && field.position[6] == 'X' && field.position[9] == 'X') Winner = 'X';
+        if (field.position[1] == 'X' && field.position[5] == 'X' && field.position[9] == 'X') Winner = 'X';
+        if (field.position[3] == 'X' && field.position[5] == 'X' && field.position[7] == 'X') Winner = 'X';
+        if (Winner == 'X' )
+        {System.out.println("Player1 wins the game." );
+            return Winner;
+        }
+
+        // Check if O wins
+        if (field.position[1] == 'O' && field.position[2] == 'O' && field.position[3] == 'O') Winner = 'O';
+        if (field.position[4] == 'O' && field.position[5] == 'O' && field.position[6] == 'O') Winner = 'O';
+        if (field.position[7] == 'O' && field.position[8] == 'O' && field.position[9] == 'O') Winner = 'O';
+        if (field.position[1] == 'O' && field.position[4] == 'O' && field.position[7] == 'O') Winner = 'O';
+        if (field.position[2] == 'O' && field.position[5] == 'O' && field.position[8] == 'O') Winner = 'O';
+        if (field.position[3] == 'O' && field.position[6] == 'O' && field.position[9] == 'O') Winner = 'O';
+        if (field.position[1] == 'O' && field.position[5] == 'O' && field.position[9] == 'O') Winner = 'O';
+        if (field.position[3] == 'O' && field.position[5] == 'O' && field.position[7] == 'O') Winner = 'O';
+        if (Winner == 'O' )
+        {
+            System.out.println( "Player2 wins the game." );
+            return Winner; }
+
+        return Winner;
     }
 }
 
