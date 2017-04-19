@@ -13,6 +13,6 @@ public class GameRunner {
         System.out.println("Have a fun time =)");
         new Field().currentBoard();
         System.out.println("Enter the number where you want to place X");
-        new Field().play();
+        new GameLogic().play();
     }
 }
