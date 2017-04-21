@@ -11,7 +11,6 @@ public class GameLogic {
 
     private int count = 0;  //Count the number of free cells
 
-
     //start the game
     void play()
     {
