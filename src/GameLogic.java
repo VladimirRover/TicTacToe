@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -5,71 +6,75 @@ import java.util.Scanner;
  */
 public class GameLogic {
 
-
-    private int playersCell;
-    private int computerCell;
-    private int maxSteps = 9;
+    private Field field = new Field();
     private Scanner scanner = new Scanner(System.in);
-    private boolean isPlayerStep = true;
 
-    Field field = new Field();
-    void play()
-    {
+    private boolean isPlayer = true;
+    private int maxTeps = 9;
 
-        char blank = ' ';
+    void play() {
+        int step;
+
         do {
 
-            stepOrder();
-            field.currentBoard();
-            if (!isPlayerStep){
-                System.out.println("That was Players step: cell " + playersCell);
+            boolean cellNotEmpty = true;
+
+            while (cellNotEmpty) {
+                if (isPlayer) {
+                    System.out.println("\nPlayer step");
+                    step = scanner.nextInt();
+
+                    cellNotEmpty = collisionCheck(step);
+
+                    field.position[step] = 'X';
+
+                    System.out.println("\nthat was Player step. Cell number: " + step + "\n");
+
+                    field.currentBoard();
+
+                    if (checkWinner() == 'X') {
+                        System.exit(0);
+                    }
+                    isPlayer = false;
+                } else {
+                    step = 1 + (int) (Math.random() * 9);
+
+                    cellNotEmpty = collisionCheck(step);
+
+                    field.position[step] = 'O';
+
+                    checkWinner();
+
+                    System.out.println("\nthat was Computer step. Cell number: " + step + "\n");
+                    field.currentBoard();
+                    if (checkWinner() == 'O') {
+                        System.exit(0);
+                    }
+                    isPlayer = true;
+                }
+
+                maxTeps--;
+                if (maxTeps == 0) {
+                    System.out.println("Game over");
+                } else {
+                    System.out.println("Осталось ходов " + maxTeps);
+                }
             }
-            else {
-                System.out.println("That was Computer: cell " + computerCell);
-            }
-            System.out.println();
-            System.out.println();
-            maxSteps--;
-            if (maxSteps == 0){
-                System.out.println("Game over");
-            }
-        }while (checkWinner() == blank);
+
+        }while (maxTeps > 0);
     }
 
-    private void stepOrder() {
 
-        boolean cellTaken = true;
 
-        while (cellTaken) {
-
-            if (isPlayerStep) {
-                playersCell = scanner.nextInt();
-                cellTaken = collisionCheck(playersCell);
-                field.position[playersCell] = 'X';
-                isPlayerStep = false;
-            } else {
-                computerCell = 1 + (int) (Math.random() * 9);
-                cellTaken = collisionCheck(computerCell);
-                field.position[computerCell] = 'O';
-                isPlayerStep = true;
-            }
-        }
-    }
-
-    private boolean collisionCheck(int step){
-        if (field.position[step] == 'X' ||  field.position[step] == 'O'){
-            System.out.println("Tge cell is not empty");
-            System.out.println("Please choose another cell");
-            System.out.println();
-            field.currentBoard();
-            stepOrder();
+    boolean collisionCheck(int step){
+        if (field.position[step] == 'X' || field.position[step] == 'O'){
+            System.out.println("Cell is not empty. Retry");
             return true;
         }
         else {
             return false;
         }
     }
-
 
     public  char checkWinner()
     {
@@ -85,7 +90,8 @@ public class GameLogic {
         if (field.position[1] == 'X' && field.position[5] == 'X' && field.position[9] == 'X') Winner = 'X';
         if (field.position[3] == 'X' && field.position[5] == 'X' && field.position[7] == 'X') Winner = 'X';
         if (Winner == 'X' )
-        {System.out.println("Player1 wins the game." );
+        {
+            System.out.println("Player wins the game." );
             return Winner;
         }
 
